@@ -28,7 +28,7 @@
   const slug = slugMatch[1];
 
   // Build the command
-  const name = title.replace(/\s+/g, '_');
+  const name = title.replace(/\s+/g, '_').replace(/,/g, '');
   const dir = year ? `${title} (${year}) {tvdb-${seriesId}}` : `${title} {tvdb-${seriesId}}`;
   const tvdbUrl = `https://www.thetvdb.com/series/${slug}/allseasons/official`;
   const command = `merge-into-series --add "${name}" "${dir}" "${tvdbUrl}"`;
