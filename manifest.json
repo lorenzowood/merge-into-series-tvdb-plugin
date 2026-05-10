@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "merge-into-series TVDB",
+  "version": "1.0",
+  "description": "Inserts a merge-into-series --add command on TVDB series pages",
+  "content_scripts": [
+    {
+      "matches": ["https://www.thetvdb.com/series/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
