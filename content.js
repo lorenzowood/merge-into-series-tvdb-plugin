@@ -47,8 +47,8 @@
   }
 
   // Build the command
+  const name = title.replace(/\s+/g, '_').replace(/,/g, '');
   const safeTitle = sanitizeTitle(title);
-  const name = safeTitle.replace(/\s+/g, '_').replace(/,/g, '');
   const dir = year ? `${safeTitle} (${year}) {tvdb-${seriesId}}` : `${safeTitle} {tvdb-${seriesId}}`;
   const tvdbUrl = `https://www.thetvdb.com/series/${slug}/allseasons/official`;
   const command = `merge-into-series --add "${name}" "${dir}" "${tvdbUrl}"`;
