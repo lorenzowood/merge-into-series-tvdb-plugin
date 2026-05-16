@@ -44,6 +44,8 @@ On each TVDB series page the content script reads:
 
 It then builds a `merge-into-series --add` command and inserts it into the page between the title and the language/description block.
 
+Characters that are illegal or problematic in directory names or Plex parsing (`? : * / \ | < > "`) are replaced with safe substitutes in the directory argument only — for example `Are You Being Served?` becomes `Are You Being Served!` as the target directory, while the config key keeps the original punctuation. The substitution map matches the one used by [plex_name_formatter_extension](https://github.com/lorenzowood/plex_name_formatter_extension) for consistency.
+
 ## Related
 
 - [merge-into-series](https://github.com/lorenzowood/merge-into-series) — the CLI tool this plugin generates commands for
