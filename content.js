@@ -27,9 +27,29 @@
   if (!slugMatch) return;
   const slug = slugMatch[1];
 
+  // Replace characters that are illegal or problematic in directory names / Plex parsing.
+  // Matches the substitution map used by plex_name_formatter_extension.
+  function sanitizeTitle(s) {
+    return s.replace(/[<>:"\/\\|?*]/g, match => {
+      switch (match) {
+        case '<':  return '(';
+        case '>':  return ')';
+        case ':':  return ' --';
+        case '"':  return "'";
+        case '/':  return ' or ';
+        case '\\': return ' or ';
+        case '|':  return ',';
+        case '?':  return '!';
+        case '*':  return 'x';
+        default:   return '_';
+      }
+    });
+  }
+
   // Build the command
-  const name = title.replace(/\s+/g, '_').replace(/,/g, '');
-  const dir = year ? `${title} (${year}) {tvdb-${seriesId}}` : `${title} {tvdb-${seriesId}}`;
+  const safeTitle = sanitizeTitle(title);
+  const name = safeTitle.replace(/\s+/g, '_').replace(/,/g, '');
+  const dir = year ? `${safeTitle} (${year}) {tvdb-${seriesId}}` : `${safeTitle} {tvdb-${seriesId}}`;
   const tvdbUrl = `https://www.thetvdb.com/series/${slug}/allseasons/official`;
   const command = `merge-into-series --add "${name}" "${dir}" "${tvdbUrl}"`;
 
