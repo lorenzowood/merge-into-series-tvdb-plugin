@@ -46,6 +46,18 @@ It then builds a `merge-into-series --add` command and inserts it into the page 
 
 Characters that are illegal or problematic in directory names or Plex parsing (`? : * / \ | < > "`) are replaced with safe substitutes in the directory argument only — for example `Are You Being Served?` becomes `Are You Being Served!` as the target directory, while the config key keeps the original punctuation. The substitution map matches the one used by [plex_name_formatter_extension](https://github.com/lorenzowood/plex_name_formatter_extension) for consistency.
 
+## Episode ordering and DVD rips
+
+The extension always generates a URL pointing to the **official** episode order (`allseasons/official`). This matches the standard broadcast order on TheTVDB.
+
+If you are working with DVD rips, the numbering may differ — for example, some two-part episodes are combined into a single entry on the DVD release, which shifts all subsequent episode numbers. Star Trek: Voyager is a known case of this.
+
+TheTVDB often has a separate **DVD order** listing (`allseasons/dvd`) with the correct numbering for those releases. If you find episode numbers are off, edit the relevant entry in `~/.merge-into-series.conf` and replace `/allseasons/official` with `/allseasons/dvd` — for example:
+
+```
+Star_Trek:_Voyager,Star Trek -- Voyager (1995) {tvdb-74550},https://www.thetvdb.com/series/star-trek-voyager/allseasons/dvd
+```
+
 ## Related
 
 - [merge-into-series](https://github.com/lorenzowood/merge-into-series) — the CLI tool this plugin generates commands for
